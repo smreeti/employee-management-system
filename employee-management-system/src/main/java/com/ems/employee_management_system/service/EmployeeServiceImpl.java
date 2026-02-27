@@ -68,6 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .stream()
                 .map(emp -> new EmployeeResponseDTO(
                         emp.getName(),
+                        emp.getEmail(),
                         emp.getDepartment(),
                         emp.getSalary()
                 ))

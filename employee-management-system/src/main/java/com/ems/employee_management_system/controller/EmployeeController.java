@@ -2,6 +2,7 @@ package com.ems.employee_management_system.controller;
 
 import com.ems.employee_management_system.dto.EmployeeRequestDTO;
 import com.ems.employee_management_system.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,10 @@ public class EmployeeController {
     }
 
     @PostMapping("/saveEmployee")
-    public ResponseEntity<?> saveEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
+    public ResponseEntity<?> saveEmployee(@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO) {
         return new ResponseEntity<>(employeeService.saveEmployee(employeeRequestDTO), HttpStatus.OK);
     }
+
     @PostMapping("/updateEmployee")
     public ResponseEntity<?> updateEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
         return new ResponseEntity<>(employeeService.updateEmployee(employeeRequestDTO), HttpStatus.OK);

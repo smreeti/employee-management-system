@@ -18,6 +18,8 @@ public class Employee extends BaseEntity  {
 
     private String name;
 
+    private String email;
+
     @Column(name = "department")
     private String department;
 
