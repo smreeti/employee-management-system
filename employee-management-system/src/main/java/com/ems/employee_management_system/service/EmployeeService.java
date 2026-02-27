@@ -14,4 +14,6 @@ public interface EmployeeService {
 
     List<EmployeeResponseDTO> fetchAllEmployees();
 
+    List<EmployeeResponseDTO> fetchEmployees(int page, int size);
+
 }

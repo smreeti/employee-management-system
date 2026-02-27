@@ -37,4 +37,9 @@ public class EmployeeController {
         return new ResponseEntity<>(employeeService.fetchAllEmployees(),HttpStatus.OK);
     }
 
+    @GetMapping("/fetchEmployees")
+    public ResponseEntity<?> fetchEmployees(@RequestParam("page") int page, @RequestParam("size") int size) {
+        return new ResponseEntity<>(employeeService.fetchEmployees(page, size),HttpStatus.OK);
+    }
+
 }

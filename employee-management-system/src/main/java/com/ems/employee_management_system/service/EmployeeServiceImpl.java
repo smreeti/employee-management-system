@@ -2,15 +2,21 @@ package com.ems.employee_management_system.service;
 
 import com.ems.employee_management_system.dto.EmployeeRequestDTO;
 import com.ems.employee_management_system.dto.EmployeeResponseDTO;
+import com.ems.employee_management_system.exceptions.ResourceNotFoundException;
 import com.ems.employee_management_system.model.Employee;
 import com.ems.employee_management_system.repository.EmployeeRepository;
+import com.ems.employee_management_system.util.EmployeeUtil;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -35,13 +41,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String updateEmployee(EmployeeRequestDTO employeeRequestDTO) {
-        Optional<Employee> savedEmployee = employeeRepository.findById(employeeRequestDTO.getId());
+        Employee employee = employeeRepository.findById(employeeRequestDTO.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("No employee record found"));
 
-        if (savedEmployee.isEmpty()) {
-            return "No employee record found";
-        }
-
-        Employee employee = savedEmployee.get();
         employee.setName(employeeRequestDTO.getName());
         employee.setDepartment(employeeRequestDTO.getDepartment());
 
@@ -52,13 +54,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public String deleteEmployee(Integer employeeId) {
-        Optional<Employee> savedEmployee = employeeRepository.findById(employeeId);
+        Employee savedEmployee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new ResourceNotFoundException("No employee record found"));
 
-        if (savedEmployee.isEmpty()) {
-            return "No employee record found";
-        }
-
-        employeeRepository.delete(savedEmployee.get());
+        employeeRepository.delete(savedEmployee);
         return "Employee deleted successfully";
     }
 
@@ -66,12 +65,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeResponseDTO> fetchAllEmployees() {
         return employeeRepository.findAll()
                 .stream()
-                .map(emp -> new EmployeeResponseDTO(
-                        emp.getName(),
-                        emp.getEmail(),
-                        emp.getDepartment(),
-                        emp.getSalary()
-                ))
-                .toList();
+                .map(EmployeeUtil::mapToEmployeeResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<EmployeeResponseDTO> fetchEmployees(int page, int size) {
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by("salary").descending());
+
+        Page<Employee> employeePage = employeeRepository.findAll(pageable);
+
+        return employeePage.stream()
+                .map(EmployeeUtil::mapToEmployeeResponseDTO)
+                .collect(Collectors.toList());
     }
 }
