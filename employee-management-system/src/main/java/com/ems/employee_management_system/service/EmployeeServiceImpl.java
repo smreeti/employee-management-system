@@ -80,4 +80,16 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .map(EmployeeUtil::mapToEmployeeResponseDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<EmployeeResponseDTO> searchEmployees(String name) {
+        List<Employee> employees = employeeRepository.findByName(name);
+
+        if (employees.isEmpty())
+            throw new ResourceNotFoundException("No employee found");
+
+        return employees.stream()
+                .map(EmployeeUtil::mapToEmployeeResponseDTO)
+                .collect(Collectors.toList());
+    }
 }
