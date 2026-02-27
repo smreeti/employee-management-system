@@ -3,8 +3,12 @@ package com.ems.employee_management_system.service;
 import com.ems.employee_management_system.dto.EmployeeRequestDTO;
 import com.ems.employee_management_system.dto.EmployeeResponseDTO;
 import com.ems.employee_management_system.exceptions.ResourceNotFoundException;
+import com.ems.employee_management_system.model.Department;
 import com.ems.employee_management_system.model.Employee;
+import com.ems.employee_management_system.model.Project;
+import com.ems.employee_management_system.repository.DepartmentRepository;
 import com.ems.employee_management_system.repository.EmployeeRepository;
+import com.ems.employee_management_system.repository.ProjectRepository;
 import com.ems.employee_management_system.util.EmployeeUtil;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -24,10 +28,18 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
+    private final DepartmentRepository departmentRepository;
+
+    private final ProjectRepository projectRepository;
+
     private final ModelMapper modelMapper;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, ModelMapper modelMapper) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               DepartmentRepository departmentRepository,
+                               ProjectRepository projectRepository, ModelMapper modelMapper) {
         this.employeeRepository = employeeRepository;
+        this.departmentRepository = departmentRepository;
+        this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -35,6 +47,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public String saveEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = modelMapper.map(employeeRequestDTO, Employee.class);
         employee.setJoiningDate(LocalDate.now());
+
+        if (employeeRequestDTO.getDepartmentId() != null) {
+            Department department = findDepartment(employeeRequestDTO.getDepartmentId());
+            employee.setDepartment(department);
+        }
+
+        List<Project> projects = projectRepository.findAllById(employeeRequestDTO.getProjectIds());
+        employee.setProject(projects);
+
         employeeRepository.save(employee);
         return "Employee created successfully";
     }
@@ -45,7 +66,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new ResourceNotFoundException("No employee record found"));
 
         employee.setName(employeeRequestDTO.getName());
-        employee.setDepartment(employeeRequestDTO.getDepartment());
+
+        if (employeeRequestDTO.getDepartmentId() != null) {
+            Department department = findDepartment(employeeRequestDTO.getDepartmentId());
+            employee.setDepartment(department);
+        }
 
         employeeRepository.save(employee);
 
@@ -91,5 +116,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employees.stream()
                 .map(EmployeeUtil::mapToEmployeeResponseDTO)
                 .collect(Collectors.toList());
+    }
+
+    private Department findDepartment(Integer departmentId) {
+        return departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new ResourceNotFoundException("Department not found"));
     }
 }

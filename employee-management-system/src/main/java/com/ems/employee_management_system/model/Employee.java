@@ -1,12 +1,12 @@
 package com.ems.employee_management_system.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -14,14 +14,20 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Employee extends BaseEntity  {
+public class Employee extends BaseEntity {
 
     private String name;
 
     private String email;
 
-    @Column(name = "department")
-    private String department;
-
     private Double salary;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private List<Project> project;
+
 }

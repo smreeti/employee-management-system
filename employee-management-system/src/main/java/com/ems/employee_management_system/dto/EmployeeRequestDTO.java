@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class EmployeeRequestDTO {
     private Integer id;
@@ -14,6 +16,9 @@ public class EmployeeRequestDTO {
     @Email(message = "Not a valid email")
     private String email;
 
-    private String department;
+    private Integer departmentId;
+
+    private List<Integer> projectIds;
+
     private Double salary;
 }
