@@ -1,14 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 export function EmployeeList() {
 
     const [employees, setEmployees] = useState([]);
     const [name, setName] = useState("");
+    const previousInputValue  = useRef("");
 
     useEffect(() => {
         console.log("EmployeeList component mounted");
-    }, []);
+        previousInputValue.current = name;
+    }, [name]);
 
     const handleOnClick = () => {
         axios.get('http://localhost:8080/api/employee/fetchAllEmployees')
@@ -33,6 +35,9 @@ export function EmployeeList() {
             <button onClick={() => searchEmployee(name)}>Search employees</button>
 
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Search by name" />
+
+            <p>Current value: {name}</p>
+            <p>Previous Value: {previousInputValue.current}</p>
             <table>
                 <thead>
                     <tr>
