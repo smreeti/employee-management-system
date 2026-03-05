@@ -23,6 +23,7 @@ public class EmployeeUtil {
                 .toList();
 
         return new EmployeeResponseDTO(
+                employee.getId(),
                 employee.getName(), employee.getEmail(), department, employee.getSalary(), projectNames);
     }
 }
