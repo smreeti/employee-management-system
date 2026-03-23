@@ -2,7 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import {
     Home,
     About,
-    Employee,
+    EmployeePage,
     Navbar,
     References
 } from './components';
@@ -17,7 +17,7 @@ export const Page = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/employee" element={<Employee />} />
+                    <Route path="/employee" element={<EmployeePage />} />
                     <Route path="/department" element={<Department />} />
                     <Route path="/references" element={<References />} />
                     {referencePages.map(page => (

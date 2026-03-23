@@ -1,6 +1,6 @@
 export { Home } from './Home'
 export { About } from './About'
-export { Employee } from './employee/Employee'
+export { EmployeePage } from './employee/EmployeePage'
 export { EmployeeList } from './employee/EmployeeList'
 export { Navbar } from './Navbar'
 export { References } from './references/References'

@@ -6,7 +6,7 @@ public record EmployeeResponseDTO(
         int id,
         String name,
         String email,
-        String department,
+        DepartmentResponseDTO department,
         Double salary,
         List<String> projectNames
 ) {

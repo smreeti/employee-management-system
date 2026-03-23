@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { getDepartments } from "../../services/departmentService";
-import { saveEmployee } from "../../services/employeeService";
-import { EmployeeList } from "./EmployeeList";
+import { saveEmployee, updateEmployee } from "../../services/employeeService";
 
-export const Employee = () => {
+export const Employee = ({ editEmployee, onSuccess, clearEdit }) => {
     const [employee, setEmployee] = useState({
+        id: "",
         name: "",
         email: "",
         salary: "",
@@ -13,54 +13,59 @@ export const Employee = () => {
 
     const [departments, setDepartments] = useState([]);
     const [errorMsg, setErrorMessage] = useState({});
-    const [refreshFlag, setRefreshFlag] = useState(false);
 
-    // Load departments for dropdown
+    // Load departments
+    useEffect(() => { fetchDepartments(); }, []);
+
+    // Populate form when editing
     useEffect(() => {
-        fetchDepartments();
-    }, []);
+        if (editEmployee) {
+            setEmployee({
+                id: editEmployee.id,
+                name: editEmployee.name,
+                email: editEmployee.email,
+                salary: editEmployee.salary,
+                departmentId: editEmployee.department?.id || ""
+            });
+            setErrorMessage({});
+        }
+    }, [editEmployee]);
 
     const fetchDepartments = async () => {
         try {
             const response = await getDepartments();
             setDepartments(response.data);
-        } catch (error) {
-            console.log(error);
-        }
+        } catch (error) { console.log(error); }
     };
 
     const handleChange = (e) => {
-        setEmployee({
-            ...employee,
-            [e.target.name]: e.target.value
-        });
+        setEmployee({ ...employee, [e.target.name]: e.target.value });
     };
 
     const handleSubmit = async () => {
         try {
             const payload = {
+                id: employee.id,
                 name: employee.name,
                 email: employee.email,
                 salary: Number(employee.salary),
-                department: {
-                    id: employee.departmentId
-                }
+                departmentId: employee.departmentId
             };
 
-            await saveEmployee(payload);
+            if (employee.id) {
+                await updateEmployee(payload);
+                clearEdit(); // clear editing state
+            } else {
+                await saveEmployee(payload);
+            }
 
-            setEmployee({
-                name: "",
-                email: "",
-                salary: "",
-                departmentId: ""
-            });
-
+            setEmployee({ id: "", name: "", email: "", salary: "", departmentId: "" });
             setErrorMessage({});
-            setRefreshFlag(prev => !prev); // toggle to trigger fetch all employes
+            onSuccess(); // refresh EmployeeList
+            alert(`Employee ${employee.id ? "updated" : "added"} successfully!`);
+
         } catch (error) {
-            console.log(error);
-            if (error.response && error.response.data && error.response.data.errors) {
+            if (error.response?.data?.errors) {
                 setErrorMessage(error.response.data.errors);
             } else {
                 setErrorMessage({ general: "Something went wrong. Please try again." });
@@ -68,67 +73,66 @@ export const Employee = () => {
         }
     };
 
-
-
     return (
-        <>
-            <div className="employee-container">
-                <h2>Add Employee</h2>
+        <div className="employee-form">
+            <h2>{employee.id ? "Update Employee" : "Add Employee"}</h2>
 
-                <div className="form-group">
-                    <label htmlFor="name">Name:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={employee.name}
-                        onChange={handleChange}
-                    />
-                    {errorMsg?.name && <p className="field-error">{errorMsg.name}</p>}
-                </div>
+            {errorMsg.general && <div className="error-msg">{errorMsg.general}</div>}
 
-                <div className="form-group">
-                    <label htmlFor="email">Email:</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={employee.email}
-                        onChange={handleChange}
-                    />
-                    {errorMsg?.email && <p className="field-error">{errorMsg.email}</p>}
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="salary">Salary:</label>
-                    <input
-                        type="number"
-                        name="salary"
-                        value={employee.salary}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="departmentId">Department:</label>
-                    <select
-                        name="departmentId"
-                        value={employee.departmentId}
-                        onChange={handleChange}
-                    >
-                        <option value="">Select Department</option>
-                        {departments.map((dept) => (
-                            <option key={dept.id} value={dept.id}>
-                                {dept.name}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-
-                <button className="submit-btn" onClick={handleSubmit}>
-                    Submit
-                </button>
+            <div className="form-group">
+                <label htmlFor="name">Name:</label>
+                <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    value={employee.name}
+                    onChange={handleChange}
+                />
+                {errorMsg?.name && <p className="field-error">{errorMsg.name}</p>}
             </div>
 
-            <EmployeeList refreshFlag={refreshFlag} />
-        </>
+            <div className="form-group">
+                <label htmlFor="email">Email:</label>
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={employee.email}
+                    onChange={handleChange}
+                />
+                {errorMsg?.email && <p className="field-error">{errorMsg.email}</p>}
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="salary">Salary:</label>
+                <input
+                    id="salary"
+                    type="number"
+                    name="salary"
+                    value={employee.salary}
+                    onChange={handleChange}
+                />
+                {errorMsg?.salary && <p className="field-error">{errorMsg.salary}</p>}
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="departmentId">Department:</label>
+                <select
+                    name="departmentId"
+                    value={employee.departmentId}
+                    onChange={handleChange}
+                >
+                    <option value="">Select Department</option>
+                    {departments.map(dept => (
+                        <option key={dept.id} value={dept.id}>{dept.name}</option>
+                    ))}
+                </select>
+                {errorMsg?.departmentId && <p className="field-error">{errorMsg.departmentId}</p>}
+            </div>
+
+            <button className="submit-btn" onClick={handleSubmit}>
+                {employee.id ? "Update" : "Add"}
+            </button>
+        </div>
     );
 };

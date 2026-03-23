@@ -1,7 +1,11 @@
 import api from "./axiosInstance";
 
-export const saveEmployee = (name) => {
-    return api.post("/employee", name);
+export const saveEmployee = (payload) => {
+    return api.post("/employee", payload);
+};
+
+export const updateEmployee = (payload) => {
+    return api.put("/employee", payload);
 };
 
 export const getAllEmployees = () => {

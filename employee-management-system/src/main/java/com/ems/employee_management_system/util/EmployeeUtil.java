@@ -1,5 +1,6 @@
 package com.ems.employee_management_system.util;
 
+import com.ems.employee_management_system.dto.DepartmentResponseDTO;
 import com.ems.employee_management_system.dto.EmployeeResponseDTO;
 import com.ems.employee_management_system.model.Department;
 import com.ems.employee_management_system.model.Employee;
@@ -12,8 +13,11 @@ import java.util.Optional;
 public class EmployeeUtil {
 
     public static EmployeeResponseDTO mapToEmployeeResponseDTO(Employee employee) {
-        String department = Optional.ofNullable(employee.getDepartment())
+        String departmentName = Optional.ofNullable(employee.getDepartment())
                 .map(Department::getName)
+                .orElse(null);
+        Integer departmentId = Optional.ofNullable(employee.getDepartment())
+                .map(Department::getId)
                 .orElse(null);
 
         List<String> projectNames = Optional.ofNullable(employee.getProject())
@@ -21,6 +25,8 @@ public class EmployeeUtil {
                 .stream()
                 .map(Project::getName)
                 .toList();
+
+        DepartmentResponseDTO department = new DepartmentResponseDTO(departmentId, departmentName);
 
         return new EmployeeResponseDTO(
                 employee.getId(),

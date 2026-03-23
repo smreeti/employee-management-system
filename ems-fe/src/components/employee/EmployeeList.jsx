@@ -1,100 +1,100 @@
 import { useState, useEffect } from 'react';
 import { deleteEmployee, getAllEmployees, searchEmployees } from '../../services/employeeService';
 
-export function EmployeeList({ refreshFlag  }) {
-
+export const EmployeeList = ({ refreshFlag, onEdit }) => {
     const [employees, setEmployees] = useState([]);
     const [name, setName] = useState("");
     const [errorMsg, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        console.log("EmployeeList component mounted");
-        fetchAllEmployees();
-    }, [refreshFlag]);
+    useEffect(() => { fetchAllEmployees(); }, [refreshFlag]);
 
     const fetchAllEmployees = async () => {
-        const response = await getAllEmployees();
-
-        if (response.data && response.data.length > 0) {
-            setEmployees(response.data);
-            setErrorMessage("");
-        } else {
-            // No records found
-            setEmployees([]);
-            setErrorMessage("No record found");
-        }
-    }
-
-    const searchEmployee = async (name) => {
-        if (!name.trim()) return;
-
+        setName('');
         try {
-            const response = await searchEmployees(name);
-
-            if (response.data && response.data.length > 0) {
+            const response = await getAllEmployees();
+            if (response.data.length > 0) {
                 setEmployees(response.data);
                 setErrorMessage("");
             } else {
-                // No records found
                 setEmployees([]);
-                setErrorMessage("No record found");
+                setErrorMessage("No records found");
             }
-
-        } catch (error) {
-            console.log(error);
+        } catch {
             setEmployees([]);
-            setErrorMessage("No employees found.");
+            setErrorMessage("Failed to fetch employees");
+        }
+    };
+
+    const searchEmployee = async (name) => {
+        if (!name.trim()) return;
+        try {
+            const response = await searchEmployees(name);
+            if (response.data.length > 0) {
+                setEmployees(response.data);
+                setErrorMessage("");
+            } else {
+                setEmployees([]);
+                setErrorMessage("No records found");
+            }
+        } catch {
+            setEmployees([]);
+            setErrorMessage("No records found");
         }
     };
 
     const handleDelete = async (id) => {
-        await deleteEmployee(id);
-
         try {
+            await deleteEmployee(id);
             fetchAllEmployees();
-        } catch(error) {
-            setEmployees([]);
-            setErrorMessage("Something went wrong");
+        } catch {
+            setErrorMessage("Delete failed");
         }
-    }
+    };
 
     return (
-        <>
+        <div className="employee-list">
             <h2>Employee List</h2>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Search by name" />
 
-            <button onClick={() => searchEmployee(name)}>Search employees</button>
-            <button onClick={fetchAllEmployees}>Fetch all employees</button>
+            <div className="search-section">
+                <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    placeholder="Search by name"
+                />
+                <button onClick={() => searchEmployee(name)}>Search</button>
+                <button onClick={fetchAllEmployees}>Reset</button>
+            </div>
 
-            <p>Search value: <b>{name}</b></p>
-
-            {
-                errorMsg ? <div className="error-msg">{errorMsg}</div> :
-
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Department</th>
-                                <th>Project</th>
+            {errorMsg ? (
+                <div className="error-msg">{errorMsg}</div>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Department</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {employees.map(emp => (
+                            <tr key={emp.id}>
+                                <td>{emp.name}</td>
+                                <td>{emp.email}</td>
+                                <td>{emp.department.name}</td>
+                                <td>{emp.salary}</td>
+                                <td>
+                                    <button onClick={() => onEdit(emp)}>Edit</button>
+                                    <button onClick={() => handleDelete(emp.id)}>Delete</button>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                employees.map(employee => (
-                                    <tr key={employee.id}>
-                                        <td>{employee.name}</td>
-                                        <td>{employee.email}</td>
-                                        <td>{employee.department}</td>
-                                        <td>{employee.projectNames}</td>
-                                        <td><button onClick={() => handleDelete(employee.id)}>X</button></td>
-                                    </tr>
-                                ))
-                            }
-                        </tbody>
-                    </table>
-            }
-        </>
-    )
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
+    );
 }
