@@ -5,11 +5,9 @@ export function EmployeeList() {
 
     const [employees, setEmployees] = useState([]);
     const [name, setName] = useState("");
-    const previousInputValue  = useRef("");
 
     useEffect(() => {
         console.log("EmployeeList component mounted");
-        previousInputValue.current = name;
     }, [name]);
 
     const handleOnClick = () => {
@@ -36,31 +34,34 @@ export function EmployeeList() {
 
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Search by name" />
 
-            <p>Current value: {name}</p>
-            <p>Previous Value: {previousInputValue.current}</p>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Department</th>
-                        <th>Project</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        employees.length === 0 ? <tr> No records</tr> :
-                            employees.map(employee => (
-                                <tr key={employee.id}>
-                                    <td>{employee.name}</td>
-                                    <td>{employee.email}</td>
-                                    <td>{employee.department}</td>
-                                    <td>{employee.projectNames}</td>
-                                </tr>
-                            ))
-                    }
-                </tbody>
-            </table>
+            <p>Search value: {name}</p>
+
+            {
+                employees.length === 0 ? <p> No records</p> :
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Department</th>
+                                <th>Project</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                employees.map(employee => (
+                                    <tr key={employee.id}>
+                                        <td>{employee.name}</td>
+                                        <td>{employee.email}</td>
+                                        <td>{employee.department}</td>
+                                        <td>{employee.projectNames}</td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+            }
         </>
     )
 }

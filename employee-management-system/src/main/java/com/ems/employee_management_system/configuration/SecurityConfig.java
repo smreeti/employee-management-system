@@ -40,20 +40,21 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/user/**").permitAll()
-                        .requestMatchers("/api/employee/**").permitAll() //for test only
-//                        .requestMatchers("/api/employee/**").hasAnyRole("ADMIN", "USER")
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .httpBasic(Customizer.withDefaults())
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(authenticationEntryPoint())
-                        .accessDeniedHandler(accessDeniedHandler())
-                );
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+//                .authorizeHttpRequests(auth -> auth
+//                                .requestMatchers("/auth/**").permitAll()
+//                                .requestMatchers("/api/user/**").permitAll()
+//                                .requestMatchers("/api/employee/**").permitAll() //for test only
+//                                .requestMatchers("/api/**").permitAll() //for test only
+////                        .requestMatchers("/api/employee/**").hasAnyRole("ADMIN", "USER")
+//                                .anyRequest().authenticated()
+//                )
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//                .httpBasic(Customizer.withDefaults())
+//                .exceptionHandling(exception -> exception
+//                        .authenticationEntryPoint(authenticationEntryPoint())
+//                        .accessDeniedHandler(accessDeniedHandler())
+//                );
         return http.build();
     }
 

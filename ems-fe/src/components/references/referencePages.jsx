@@ -6,10 +6,12 @@ import { UseCallbackExample } from "./UseCallbackExample";
 import { UseMemoExample } from "./UseMemoExample";
 import { ReduxExample } from "./ReduxExample";
 import { ListExample } from "./ListExample";
+import { UseRefExample } from "./UseRefExample";
 
 export const referencePages = [
     { path: "hoc", component: <HOCExample />, label: "Higher Order Component" },
     { path: "lists", component: <ListExample />, label: "Lists" },
+    { path: "useRef", component: <UseRefExample />, label: "useRef" },
     { path: "useContext", component: <UseContextExample />, label: "useContext" },
     { path: "useReducer", component: <UseReducerExample />, label: "useReducer" },
     { path: "useCallback", component: <UseCallbackExample />, label: "useCallback" },

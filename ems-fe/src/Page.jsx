@@ -2,12 +2,12 @@ import { Routes, Route } from 'react-router-dom';
 import {
     Home,
     About,
-    AddEmployee,
-    EmployeeList,
+    Employee,
     Navbar,
     References
 } from './components';
 import { referencePages } from './components/references/referencePages';
+import { Department } from './components/department/Department';
 
 export const Page = () => {
     return (
@@ -17,8 +17,8 @@ export const Page = () => {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
-                    <Route path="/addEmployee" element={<AddEmployee />} />
-                    <Route path="/employeeList" element={<EmployeeList />} />
+                    <Route path="/employee" element={<Employee />} />
+                    <Route path="/department" element={<Department />} />
                     <Route path="/references" element={<References />} />
                     {referencePages.map(page => (
                         <Route

@@ -5,13 +5,10 @@ import com.ems.employee_management_system.service.DepartmentService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/department")
+@RequestMapping("/api")
 public class DepartmentController {
 
     private final DepartmentService departmentService;
@@ -20,9 +17,15 @@ public class DepartmentController {
         this.departmentService = departmentService;
     }
 
-    @PostMapping("/saveDepartment")
+    @PostMapping("/department")
     public ResponseEntity<?> saveDepartment(@Valid @RequestBody DepartmentRequestDTO departmentRequestDTO) {
         departmentService.saveDepartment(departmentRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/departments")
+    public ResponseEntity<?> fetchAllEmployees() {
+        return new ResponseEntity<>(departmentService.fetchAllDepartments(), HttpStatus.OK);
+    }
+
 }

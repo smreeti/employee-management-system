@@ -1,7 +1,9 @@
 #root {
   margin: 0 !important;
   padding: 0;
+    color-scheme: light;
 }
+
 
 .navbar {
   position: fixed;
@@ -124,6 +126,43 @@ tbody button {
 
 tbody button:hover {
   background-color: #a71d2a;
+}
+
+/* Dropdown container */
+.nav-dropdown {
+  position: relative;
+  cursor: pointer;
+}
+
+/* Dropdown title */
+.dropdown-title {
+  padding: 4px 6px;
+  color: white;
+}
+
+/* Dropdown menu */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #282c34;
+  border: 1px solid #444;
+  border-radius: 4px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+/* Links inside dropdown */
+.dropdown-menu a {
+  padding: 8px 10px;
+  color: white;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background-color: #3a3f47;
 }
 
 /* Responsive: stack inputs on small screens */
