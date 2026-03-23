@@ -17,12 +17,12 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/saveEmployee")
+    @PostMapping
     public ResponseEntity<?> saveEmployee(@Valid @RequestBody EmployeeRequestDTO employeeRequestDTO) {
         return new ResponseEntity<>(employeeService.saveEmployee(employeeRequestDTO), HttpStatus.OK);
     }
 
-    @PostMapping("/updateEmployee")
+    @PutMapping
     public ResponseEntity<?> updateEmployee(@RequestBody EmployeeRequestDTO employeeRequestDTO) {
         return new ResponseEntity<>(employeeService.updateEmployee(employeeRequestDTO), HttpStatus.OK);
     }

@@ -53,8 +53,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setDepartment(department);
         }
 
-        List<Project> projects = projectRepository.findAllById(employeeRequestDTO.getProjectIds());
-        employee.setProject(projects);
+        if (employeeRequestDTO.getProjectIds() != null && !employeeRequestDTO.getProjectIds().isEmpty()) {
+            List<Project> projects = projectRepository.findAllById(employeeRequestDTO.getProjectIds());
+            employee.setProject(projects);
+        }
 
         employeeRepository.save(employee);
         return "Employee created successfully";
