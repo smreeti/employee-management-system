@@ -1,8 +1,9 @@
 import { useState, useMemo } from 'react';
-export const GridMatrix = () => {
+export const ListExample = () => {
+
+    const [items, setItems] = useState(["Apple", "Banana", "Cherry"]);
 
     const [size, setSize] = useState(3);
-    // const [grid, setGrid] = useState([]);
 
     const grid = useMemo(() => {
         const results = [];
@@ -12,7 +13,7 @@ export const GridMatrix = () => {
 
             for (let col = 0; col < size; col++) {
                 rowArr.push(`${row}-${col}`);
-            
+
             }
             results.push(rowArr);
         }
@@ -20,11 +21,19 @@ export const GridMatrix = () => {
         return results;
     }, [size]);
 
-
-
     return (
-
         <>
+            <h3>Simple List Example</h3>
+            <ul style={{ marginTop: "20px" }}>
+                {items.map((item, index) => (
+                    <li key={index} style={{ marginBottom: "8px" }}>
+                        {item}{" "}
+
+                    </li>
+                ))}
+            </ul>
+
+            <h3>Grid Matrix</h3>
             <label>
                 Select Grid Size
                 <input type="number"
@@ -36,7 +45,7 @@ export const GridMatrix = () => {
 
             <div style={{
                 display: "grid",
-                 gridTemplateColumns: `repeat(${size}, 50px)`,
+                gridTemplateColumns: `repeat(${size}, 50px)`,
                 gap: "5px",
                 marginTop: "20px",
             }}>
@@ -45,12 +54,9 @@ export const GridMatrix = () => {
                     row.map((cell) => (
                         <button
                             key={cell}
-                            //   onClick={() => toggleCell(cell)}
-                            // aria-pressed={!!activeCells[cell]}
                             style={{
-                                width: "50px",
-                                height: "50px",
-                                // background: activeCells[cell] ? "green" : "lightgray",
+                                width: "60px",
+                                height: "60px",
                                 border: "1px solid #333",
                                 cursor: "pointer",
                             }}

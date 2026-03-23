@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { referencePages } from "./referencePages";
 
 export const References = () => {
     return (
@@ -6,12 +7,11 @@ export const References = () => {
             <h1>References</h1>
             <nav>
                 <ul>
-                    <li><Link to="hoc">Higher Order Component</Link></li>
-                    <li><Link to="useContext">useContext</Link></li>
-                    <li><Link to="useReducer">useReducer</Link></li>
-                    <li><Link to="useCallback">useCallback</Link></li>
-                    <li><Link to="useMemo">useMemo</Link></li>
-                    <li><Link to="redux">Redux</Link></li>
+                    {referencePages.map(page => (
+                        <li key={page.path}>
+                            <Link to={page.path}>{page.label}</Link>
+                        </li>
+                    ))}
                 </ul>
             </nav>
         </>

@@ -5,14 +5,9 @@ import {
     AddEmployee,
     EmployeeList,
     Navbar,
-    References,
-    UseReducerExample,
-    UseCallbackExample,
-    UseMemoExample,
-    ReduxExample,
-    UseContextExample,
-    HOCExample
+    References
 } from './components';
+import { referencePages } from './components/references/referencePages';
 
 export const Page = () => {
     return (
@@ -25,12 +20,13 @@ export const Page = () => {
                     <Route path="/addEmployee" element={<AddEmployee />} />
                     <Route path="/employeeList" element={<EmployeeList />} />
                     <Route path="/references" element={<References />} />
-                    <Route path="/references/useContext" element={<UseContextExample />} />
-                    <Route path="/references/useReducer" element={<UseReducerExample />} />
-                    <Route path="/references/useCallback" element={<UseCallbackExample />} />
-                    <Route path="/references/useMemo" element={<UseMemoExample />} />
-                    <Route path="/references/redux" element={<ReduxExample />} />
-                     <Route path="/references/hoc" element={<HOCExample />} />
+                    {referencePages.map(page => (
+                        <Route
+                            key={page.path}
+                            path={`/references/${page.path}`}
+                            element={page.component}
+                        />
+                    ))}
                 </Routes>
             </div>
 
