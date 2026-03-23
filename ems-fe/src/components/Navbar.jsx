@@ -7,7 +7,7 @@ export const Navbar = () => {
 
     return (
         <nav className="navbar">
-            <h2>Employee Management System</h2>
+            <NavLink to="/about">Employee Management System</NavLink>
             <div className="nav-links">
                 <NavLink to="/about" className={({ isActive }) => isActive ? "active" : ""}> About </NavLink>
 

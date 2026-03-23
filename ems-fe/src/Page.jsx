@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
 import {
-    Home,
     About,
     EmployeePage,
     Navbar,
@@ -15,7 +14,7 @@ export const Page = () => {
             <Navbar />
             <div className="page-content">
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<About />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/employee" element={<EmployeePage />} />
                     <Route path="/department" element={<Department />} />

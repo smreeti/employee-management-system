@@ -1,7 +1,7 @@
-export const About = ({ title }) => {
+ const About = () => {
     return (
         <div className="about-page">
-            <h2>{title ? title : "About Employee Management System"}</h2>
+            <h2>About Employee Management System</h2>
             
             <p>
                 The <strong>Employee Management System</strong> (EMS) is a web application 
@@ -25,3 +25,5 @@ export const About = ({ title }) => {
         </div>
     );
 };
+
+export default About;
