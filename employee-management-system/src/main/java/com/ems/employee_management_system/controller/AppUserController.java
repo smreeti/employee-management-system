@@ -20,7 +20,7 @@ public class AppUserController {
         this.appUserService = appUserService;
     }
 
-    @PostMapping("/saveUser")
+    @PostMapping
     public ResponseEntity<?> saveAppUser(@Valid @RequestBody AppUserRequestDTO appUserRequestDTO) {
         appUserService.saveUser(appUserRequestDTO);
         return new ResponseEntity<>(HttpStatus.OK);

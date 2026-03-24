@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useAuth } from "../auth/AuthProvider";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
     const [username, setUsername] = useState("");
@@ -32,8 +33,13 @@ export const Login = () => {
                 </div>
                 <button type="submit">Login</button>
                 {error && <p style={{ color: "red" }}>{error}</p>}
+
+                <p className="signup-link">
+                    Don't have an account? <Link to="/signup">Register</Link>
+                </p>
             </div>
         </form>
+
     );
 }
 

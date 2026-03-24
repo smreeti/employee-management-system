@@ -10,6 +10,7 @@ import { Department } from './components/department/Department';
 import About from './components/About';
 import { ProtectedRoute } from './ProtectedRoute';
 import { useAuth } from './auth/AuthProvider';
+import { Signup } from './components/Signup';
 
 export const Page = () => {
 
@@ -20,6 +21,7 @@ export const Page = () => {
             <div className="page-content">
                 <Routes>
                     <Route path="/" element={<Login />} />
+                    <Route path="/signup" element={<Signup />} />
 
                     {/*Protected routes accessible after login success*/}
                     <Route element={<ProtectedRoute />}>

@@ -12,3 +12,12 @@ export const loginUser = async (username, password) => {
         throw err;
     }
 };
+
+export const signUpUser = async (payload) => {
+    try {
+        await api.post("/user", payload);
+    } catch (err) {
+        console.error("Login failed", err);
+        throw err;
+    }
+};
