@@ -84,7 +84,6 @@ button {
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease;
-  margin-left: 8px;
 }
 
 button:hover {
@@ -269,4 +268,9 @@ tbody button:hover {
 
 body .login-container {
   justify-content: center;
+}
+
+.buttons-section {
+  display: flex;
+  gap: 5px;
 }

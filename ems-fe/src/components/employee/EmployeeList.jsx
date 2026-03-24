@@ -55,7 +55,7 @@ export const EmployeeList = ({ refreshFlag, onEdit }) => {
         <div className="employee-list">
             <h2>Employee List</h2>
 
-            <div className="search-section">
+            <div className="buttons-section">
                 <input
                     type="text"
                     value={name}
@@ -86,7 +86,7 @@ export const EmployeeList = ({ refreshFlag, onEdit }) => {
                                 <td>{emp.email}</td>
                                 <td>{emp.department.name}</td>
                                 <td>{emp.salary}</td>
-                                <td>
+                                <td className= "buttons-section">
                                     <button onClick={() => onEdit(emp)}>Edit</button>
                                     <button onClick={() => handleDelete(emp.id)}>Delete</button>
                                 </td>
