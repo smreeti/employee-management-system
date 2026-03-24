@@ -11,6 +11,7 @@ import { UseStateExample } from "./UseStateExample";
 import UseEffectExample from "./UseEffectExample";
 import { CustomHooksExample } from "./CustomHooksExample";
 import { LazyLoadExample } from "./LazyLoadExample";
+import { TanStackQuery } from "./TanStackQuery";
 
 export const referencePages = [
     { path: "hoc", component: <HOCExample />, label: "Higher Order Component" },
@@ -24,5 +25,6 @@ export const referencePages = [
     { path: "useMemo", component: <UseMemoExample />, label: "useMemo" },
     { path: "customHooks", component: <CustomHooksExample />, label: "customHooks" },
     { path: "redux", component: <ReduxExample />, label: "Redux" },
-    { path: "lazyLoading", component: <LazyLoadExample />, label: "Lazy Loading" }
+    { path: "lazyLoading", component: <LazyLoadExample />, label: "Lazy Loading" },
+    { path: "tanStackQuery", component: <TanStackQuery />, label: "Tan Stack Query" }
 ];

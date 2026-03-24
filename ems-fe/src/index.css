@@ -18,9 +18,8 @@ a:hover {
 }
 
 body {
-  margin: 100px;
-  display: flex;
-  min-width: 320px;
+  /* display: flex; */
+  /* min-width: 320px; */
   min-height: 100vh;
 }
 

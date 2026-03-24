@@ -20,3 +20,11 @@ export const deleteEmployee = (id) => {
     return api.delete("/employee/deleteEmployee/" + id);
 };
 
+export const fetchEmployees = async () => {
+    const response = await getAllEmployees();
+    if (!response.data || response.data.length === 0) {
+        throw new Error('No employees found');
+    }
+    return response.data;
+};
+

@@ -21,7 +21,7 @@ export const Login = () => {
     };
 
     return (
-        <form onSubmit={handleLogin}>
+        <form onSubmit={handleLogin} className ="center-form">
             <div className="login-container">
 
                 <div className="form-group">

@@ -37,7 +37,7 @@ export const Signup = () => {
     };
 
     return (
-        <form onSubmit={handleSignup}>
+        <form onSubmit={handleSignup} className="center-form">
             <div className="login-container">
 
                 <div className="form-group">
