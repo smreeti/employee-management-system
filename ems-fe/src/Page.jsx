@@ -1,12 +1,13 @@
 import { Routes, Route } from 'react-router-dom';
 import {
-    About,
     EmployeePage,
     Navbar,
-    References
+    References,
+    Login
 } from './components';
 import { referencePages } from './components/references/referencePages';
 import { Department } from './components/department/Department';
+import About from './components/About';
 
 export const Page = () => {
     return (
@@ -14,7 +15,7 @@ export const Page = () => {
             <Navbar />
             <div className="page-content">
                 <Routes>
-                    <Route path="/" element={<About />} />
+                    <Route path="/" element={<Login />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/employee" element={<EmployeePage />} />
                     <Route path="/department" element={<Department />} />
