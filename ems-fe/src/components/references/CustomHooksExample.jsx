@@ -15,5 +15,9 @@ const useWidth = () => {
 
 export const CustomHooksExample = () => {
     const width = useWidth();
-    return <ReferencePageWrapper><h2>Window Width: {width}px</h2> </ReferencePageWrapper>;
+    return <ReferencePageWrapper>
+        <h2>Custom Hooks example</h2>
+        <h2>Window Width: {width}px</h2>
+        <p> Resize screen to calculate the width</p>
+    </ReferencePageWrapper>;
 }

@@ -18,12 +18,14 @@ export const UseCallbackExample = () => {
     return (
         <>
             <button onClick={() => navigate("/references")}> ⬅ Back to References </button>
-            <h1>Callback Example</h1>
+            <h2>Callback Example</h2>
 
             <p>Count 1: {count1}</p>
             <p>Count 2: {count2}</p>
-            <Button onClick={handleClick1} text="Button 1" />
-            <Button onClick={handleClick2} text="Button 2" />
+            <div className="buttons-section">
+                <Button onClick={handleClick1} text="Button 1" />
+                <Button onClick={handleClick2} text="Button 2" />
+            </div>
         </>
     )
 }

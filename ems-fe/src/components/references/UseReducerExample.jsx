@@ -2,7 +2,7 @@ import { useReducer } from "react"
 import { useNavigate } from "react-router-dom";
 
 export const UseReducerExample = () => {
-     const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const initialState = { count: 0 };
 
@@ -23,12 +23,14 @@ export const UseReducerExample = () => {
     return (
         <>
             <button onClick={() => navigate("/references")}> ⬅ Back to References </button>
-            <h1> useReducer example</h1>
+            <h2> useReducer example</h2>
             <p>Count:<b> {state.count}</b> </p>
 
-            <button onClick={() => dispatch({ type: "INCREMENT" })}>Increment</button>
-            <button onClick={() => dispatch({ type: "DECREMENT" })}>Decrement</button>
-            <button onClick={() => dispatch({ type: "RESET" })}>Reset</button>
+            <div className="buttons-section">
+                <button onClick={() => dispatch({ type: "INCREMENT" })}>Increment</button>
+                <button onClick={() => dispatch({ type: "DECREMENT" })}>Decrement</button>
+                <button onClick={() => dispatch({ type: "RESET" })}>Reset</button>
+            </div>
         </>
 
     )

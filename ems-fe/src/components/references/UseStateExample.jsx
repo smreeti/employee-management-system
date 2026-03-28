@@ -7,9 +7,12 @@ export const UseStateExample = () => {
 
     return (
         <div>
+            <h2>useState Example</h2>
             <h2>Count: {count}</h2>
-            <button onClick={increment}>Increment</button>
-            <button onClick={decrement}>Decrement</button>
+            <div className="buttons-section">
+                <button onClick={increment}>Increment</button>
+                <button onClick={decrement}>Decrement</button>
+            </div>
         </div>
     );
 }

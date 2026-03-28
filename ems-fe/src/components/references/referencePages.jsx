@@ -13,8 +13,11 @@ import { CustomHooksExample } from "./CustomHooksExample";
 import { LazyLoadExample } from "./LazyLoadExample";
 import { TanStackQuery } from "./TanStackQuery";
 import { ModalExample } from "./ModalExample";
+import { OutputDynamicValues } from "./OutputDynamicValues";
+import { InvestmentCalculator } from "../investmentCalculator/InvestmentCalculator";
 
 export const referencePages = [
+    { path: "dynamicValues", component: <OutputDynamicValues />, label: "Using and Outputting Dynamic Values" },
     { path: "hoc", component: <HOCExample />, label: "Higher Order Component" },
     { path: "lists", component: <ListExample />, label: "Lists" },
     { path: "useRef", component: <UseRefExample />, label: "useRef" },
@@ -28,5 +31,6 @@ export const referencePages = [
     { path: "redux", component: <ReduxExample />, label: "Redux" },
     { path: "lazyLoading", component: <LazyLoadExample />, label: "Lazy Loading" },
     { path: "tanStackQuery", component: <TanStackQuery />, label: "Tan Stack Query" },
-    { path: "modal", component: <ModalExample />, label: "Modal" }
+    { path: "modal", component: <ModalExample />, label: "Modal (create portal)" },
+    { path: "calc", component: <InvestmentCalculator />, label: "Investment Calculator (Practice Project)" }
 ];
