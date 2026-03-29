@@ -15,11 +15,16 @@ import { TanStackQuery } from "./TanStackQuery";
 import { ModalExample } from "./ModalExample";
 import { OutputDynamicValues } from "./OutputDynamicValues";
 import { InvestmentCalculator } from "../investmentCalculator/InvestmentCalculator";
+import { ScopingCSSExample } from "./ScopingCSSExample";
+import { FormActionsExample } from "./FormActionsExample";
+import { TodoComponent } from "./typescript/TodoComponent";
 
 export const referencePages = [
     { path: "dynamicValues", component: <OutputDynamicValues />, label: "Using and Outputting Dynamic Values" },
-    { path: "hoc", component: <HOCExample />, label: "Higher Order Component" },
+    { path: "scopingCSS", component: <ScopingCSSExample />, label: "Scoping CSS Rules with CSS Modules" },
     { path: "lists", component: <ListExample />, label: "Lists" },
+    { path: "formActions", component: <FormActionsExample />, label: "Form Actions" },
+    { path: "hoc", component: <HOCExample />, label: "Higher Order Component" },
     { path: "useRef", component: <UseRefExample />, label: "useRef" },
     { path: "useState", component: <UseStateExample />, label: "useState" },
     { path: "useEffect", component: <UseEffectExample />, label: "useEffect" },
@@ -32,5 +37,7 @@ export const referencePages = [
     { path: "lazyLoading", component: <LazyLoadExample />, label: "Lazy Loading" },
     { path: "tanStackQuery", component: <TanStackQuery />, label: "Tan Stack Query" },
     { path: "modal", component: <ModalExample />, label: "Modal (create portal)" },
-    { path: "calc", component: <InvestmentCalculator />, label: "Investment Calculator (Practice Project)" }
+    { path: "calc", component: <InvestmentCalculator />, label: "Investment Calculator (Practice Project)" },
+    { path: "todoTsx", component: <TodoComponent />, label: "React with Typescript (Simple To Do app)" }
+
 ];
