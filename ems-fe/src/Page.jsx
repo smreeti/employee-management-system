@@ -11,6 +11,7 @@ import About from './components/About';
 import { ProtectedRoute } from './ProtectedRoute';
 import { useAuth } from './auth/AuthProvider';
 import { Signup } from './components/Signup';
+import NotificationList from './components/NotificationList';
 
 export const Page = () => {
 
@@ -28,6 +29,8 @@ export const Page = () => {
                         <Route path="/about" element={<About />} />
                         <Route path="/employee" element={<EmployeePage />} />
                         <Route path="/department" element={<Department />} />
+                        <Route path="/notifications" element={<NotificationList />} />
+
                         <Route path="/references" element={<References />} />
                         {referencePages.map(page => (
                             <Route

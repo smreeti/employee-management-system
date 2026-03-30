@@ -34,19 +34,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final ModelMapper modelMapper;
 
+    private final EmployeeKafkaProducerService employeeKafkaProducerService;
+
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                DepartmentRepository departmentRepository,
-                               ProjectRepository projectRepository, ModelMapper modelMapper) {
+                               ProjectRepository projectRepository,
+                               ModelMapper modelMapper,
+                               EmployeeKafkaProducerService employeeKafkaProducerService) {
         this.employeeRepository = employeeRepository;
         this.departmentRepository = departmentRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
+        this.employeeKafkaProducerService = employeeKafkaProducerService;
     }
 
     @Override
     public String saveEmployee(EmployeeRequestDTO employeeRequestDTO) {
         Employee employee = modelMapper.map(employeeRequestDTO, Employee.class);
-        employee.setJoiningDate(LocalDate.now());
 
         if (employeeRequestDTO.getDepartmentId() != null) {
             Department department = findDepartment(employeeRequestDTO.getDepartmentId());
@@ -59,6 +63,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         employeeRepository.save(employee);
+
+        employeeKafkaProducerService.sendEmployee(employee);
+
         return "Employee created successfully";
     }
 

@@ -31,6 +31,7 @@ export const Navbar = () => {
                             )}
                         </div>
 
+                        <NavLink to="/notifications"> Notifications </NavLink>
                         <NavLink to="/references"> References </NavLink>
                         <button onClick={logout}> Logout </button>
                     </>
