@@ -54,7 +54,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/searchEmployees")
-    @CacheEvict(value = {"allEmployees"}, allEntries = true)
+//    @CacheEvict(value = {"allEmployees"}, allEntries = true)
     public ResponseEntity<?> searchEmployees(@RequestParam("name") String name) {
         return new ResponseEntity<>(employeeService.searchEmployees(name), HttpStatus.OK);
     }
