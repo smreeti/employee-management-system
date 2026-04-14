@@ -7,7 +7,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [accessToken, setAccessToken] = useState(null);
     //Todo: set this to false, setting as true to skip authentication for test purpose
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const navigate = useNavigate();
 
    const login = async (username, password) => {
